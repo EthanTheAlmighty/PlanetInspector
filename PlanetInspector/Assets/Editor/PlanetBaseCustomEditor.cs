@@ -14,6 +14,7 @@ public class PlanetBaseCustomEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
         //base.OnInspectorGUI();
         //set center alignment for main segment labels 
         GUIStyle centerer = GUI.skin.label;
@@ -63,6 +64,14 @@ public class PlanetBaseCustomEditor : Editor
         tip.text = "Water";
         tip.tooltip = "Whether or not this planet has water";
         myTarget.hasWater = EditorGUILayout.Toggle(tip, myTarget.hasWater);
+        //elements
+        tip.text = "Main Elements";
+        tip.tooltip = "Each of the main elements found on the planet";
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Space(10);
+        SerializedProperty elements = serializedObject.FindProperty("mainElements");
+        EditorGUILayout.PropertyField(elements, tip, true);
+        EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
 
         //Livability
@@ -134,5 +143,7 @@ public class PlanetBaseCustomEditor : Editor
             myTarget.icPopulation = 0;
         }
 
+        serializedObject.ApplyModifiedProperties();
+        
     }
 }
